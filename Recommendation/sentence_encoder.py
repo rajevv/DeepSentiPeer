@@ -43,24 +43,6 @@ def embed(x):
 	embedded = np.array(zip(*list(it.izip_longest(*embedded, fillvalue = zero))))
   	return embedded
 
-# # get the sentiment score for each review
-# def sentiment(x):  #input list of lists(tokenized sentences for each review)
-# 	print('No. of Reviews: {}'.format(len(x)))
-#         score = []
-#         it = iter(x)
-#         for R in it:
-#             if R == []:
-#                 score.append(np.array([0.0,0.0,0.0, 0.0]))
-#             else:
-#                 score.append(np.sum(np.array(map(Vader, R)), axis = 0))
-#         return np.array(score)
-
-# def Vader(review):
-#     polarity = sid.polarity_scores(review)
-#     sorted_keys = sorted(polarity.keys())
-#     return [polarity[k] for k in sorted_keys]
-			
-    
     
 # get the sentiment score for each review
 def sentiment(x):  #input list of lists(tokenized sentences for each review)
