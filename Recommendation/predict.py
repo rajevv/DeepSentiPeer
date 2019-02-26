@@ -1,4 +1,5 @@
 """
+ This script is credited to https://github.com/allenai/PeerRead with little changes.
  predict review scores of each aspect (e.g.,recommendation, clarity, impact, etc)
 """
 import sys,os,json, glob,pickle,operator,re,time,logging,shutil,pdb,math
