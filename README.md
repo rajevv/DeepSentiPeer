@@ -1,5 +1,5 @@
 # DeepSentiPeer
-A Sentiment Augmented Deep Neural Architecture to Predict Reviewer Recommendations<br>
+Harnessing Sentiment in Review Texts to Recommend Peer Review Decisions<br>
 Code for the paper: https://www.aclweb.org/anthology/P19-1106/
 
 
