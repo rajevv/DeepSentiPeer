@@ -52,7 +52,7 @@ def evaluate_(model,loader,loss):
         for i, (y, y_) in enumerate(zip(y, out)):
                         t.append(y)
                         l.append(y_)
-        return np.average(loss_log), evaluate(t,l)
+    return np.average(loss_log), evaluate(t,l)
     
 
 
