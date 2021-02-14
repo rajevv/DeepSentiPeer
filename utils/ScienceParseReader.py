@@ -1,15 +1,16 @@
-#encoding=utf8
+# encoding=utf8
 import sys
-#from importlib import reload
-reload(sys)
-sys.setdefaultencoding('utf8')
+import io
+import json
+import glob
 
-import sys,io
-import json, glob
-from Review import Review
-from Paper import Paper
+# if sys.version_info[0]<3:
+#   reload(sys)
+#   sys.setdefaultencoding('utf8')
+#from sklearn.feature_extraction.text import TfidfVectorizer
+#from .Review import Review
+#from .Paper import Paper
 from ScienceParse import ScienceParse
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 class ScienceParseReader:
   """
@@ -18,7 +19,11 @@ class ScienceParseReader:
 
   @staticmethod
   def read_science_parse(paperid, title, abstract, scienceparse_dir):
-    scienceparse_file = io.open('%s%s.pdf.json'%(scienceparse_dir,paperid), "r", encoding="utf8")
+    try:
+      scienceparse_file = io.open('%s%s.pdf.json'%(scienceparse_dir,paperid), "r", encoding="utf8")
+    except FileNotFoundError:
+      return None
+
     scienceparse_str = scienceparse_file.read()
     scienceparse_data = json.loads(scienceparse_str)
 

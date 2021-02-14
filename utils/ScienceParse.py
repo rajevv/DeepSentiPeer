@@ -62,12 +62,20 @@ class ScienceParse:
     return avg_length
 
   def get_paper_content(self):
-    content = self.title + " " + self.abstract + " " + self.get_author_names_string() + " " + \
-          self.get_domains_from_emails()
-    for sect_id in sorted(self.sections):
-      # print("###",str(sect_id))
-      content = content + " " +  self.sections[sect_id]
+    content = ''
+    content = self.title + " " + self.abstract #+ " " + self.get_author_names_string() + " " + \
+          #self.get_domains_from_emails()
+    #print(self.sections.keys())
+    #content = self.sections.get('None', '') + ' ' + self.sections.get('1 INTRODUCTION', '')
+    #print(content)
+    #print(self.sections.get('None'))
+    for sect_id in (self.sections):
+    #    print("###",str(sect_id))
+    #    print(self.sections.get('None'))
+    #   #print(self.sections[sect_id])
+        content = content + " " +  self.sections[sect_id]
     content = re.sub("\n([0-9]*\n)+", "\n", content)
+    #print('\n')
     return content
 
   def get_tagged_paper_content(self):
