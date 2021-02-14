@@ -1,21 +1,6 @@
 # DeepSentiPeer
 Harnessing sentiment in the review texts to recommend peer-review decisions
-
-```@inproceedings{ghosal-etal-2019-deepsentipeer,
-    title = "{D}eep{S}enti{P}eer: Harnessing Sentiment in Review Texts to Recommend Peer Review Decisions",
-    author = "Ghosal, Tirthankar  and
-      Verma, Rajeev  and
-      Ekbal, Asif  and
-      Bhattacharyya, Pushpak",
-    booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics",
-    month = jul,
-    year = "2019",
-    address = "Florence, Italy",
-    publisher = "Association for Computational Linguistics",
-    url = "https://www.aclweb.org/anthology/P19-1106",
-    doi = "10.18653/v1/P19-1106",
-    pages = "1120--1130",
-}
+> Ghosal, Tirthankar, et al. "DeepSentiPeer: Harnessing sentiment in review texts to recommend peer review decisions." Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics. 2019.
 
 This repository contains the updated code to the above paper. The code now supports SciBERT sentence encoder. We currently are in the process of making further updates. Currently, only the `Recommendation Task` is supported.
 
