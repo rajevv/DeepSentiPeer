@@ -21,9 +21,10 @@ This repository contains the updated code to the above paper. The code now suppo
 
 The organization of is as follows:
 ```
-`prepare_data.py`: generate and write the review and paper embeddings in .json file.
-`utils.py`: Relevant utility code for reading and embedding data
-`run_model.py`: Train the model (currently, supports only the Recommendation Task)
+.
++--`prepare_data.py`: generate and write the review and paper embeddings in .json file.
++--`utils.py`: Relevant utility code for reading and embedding data
++--`run_model.py`: Train the model (currently, supports only the Recommendation Task)
 ```
 
 To get started, follow:
@@ -35,6 +36,7 @@ $python run_model.py
 Note: `prepare_data.py` may run for many hours depending on the size of the data.
 
 The `run_model.py` has the following settings:
+
 ```
 usage: run_model.py [-h] [--batch_size BATCH_SIZE] [--dropout DROPOUT]
                     [--l2 L2] [--learning_rate LEARNING_RATE] [--mode MODE]
