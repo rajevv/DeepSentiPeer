@@ -30,7 +30,7 @@ To get started, follow:
 ```
 $python prepare_data.py ./2018
 $python run_model.py
-
+```
 Note: `prepare_data.py` may run for many hours depending on the size of the data.
 
 The `run_model.py` has the following settings:
