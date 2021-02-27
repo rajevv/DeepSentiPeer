@@ -73,7 +73,7 @@ def expr(args, params):
 																	data_path = args.datadir, 
 																	valid_path = args.datadir, 
 																	mode = args.mode, 
-																	slice=[5,5,5])
+																	slice=[-1,-1,-1])
 
 	if args.mode == 'RECOMMENDATION':
 		model = predict(768, 100, 100, max_review_sentences).to(device)
