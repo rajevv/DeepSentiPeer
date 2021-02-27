@@ -7,6 +7,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 import sys
+import itertools
 
 class Transform(object):
 	def __init__(self):
@@ -45,9 +46,13 @@ class jsonEncoder(object):
 					sentiment.append(review.get('SENTIMENT'))		
 				return paper, reviews, rec_score, sentiment
 			elif self.mode == 'DECISION':
-				pass
+				sentiment = []
+				for i, review in enumerate(encoded['reviews']):
+					reviews.append(np.asarray(review.get('review_text')))
+					sentiment.append(review.get('SENTIMENT'))
+				return paper, reviews, encoded['DECISION'], sentiment
 			else:
-				pass
+				sys.exit("Provide the mode from ['RECOMMENDATION, DECISION")
 		else:
 			return None
 		
@@ -75,23 +80,31 @@ class Data(Dataset):
 			if ret[0].shape[0] > max_paper_sents:
 				max_paper_sents = ret[0].shape[0]
 
-			for i, rev in enumerate(ret[1],0):
-				papers.append(ret[0])
-				reviews.append(rev)
-				sentiment.append(ret[3][i])
-				if mode == 'RECOMMENDATION':
+			if mode == 'RECOMMENDATION':
+				for i, rev in enumerate(ret[1],0):
+					papers.append(ret[0])
+					reviews.append(rev)
+					sentiment.append(ret[3][i])
 					rec_scores.append(int(ret[2][i]))
-				elif mode == 'DECISION':
-					pass
-				else:
-					sys.exit("Provide a valid mode from [RECOMMENDATION, DECISION]")
-				if rev.shape[0] > max_review_sents:
-					max_review_sents = rev.shape[0]	
+					if rev.shape[0] > max_review_sents:
+						max_review_sents = rev.shape[0]	
+			elif mode == 'DECISION':
+				papers.append(ret[0])
+				decision.append(ret[2])
+				sentiment_merged = list(itertools.chain.from_iterable(ret[3]))
+				rev_merged = list(itertools.chain.from_iterable(ret[1]))
+				reviews_all.append(rev_merged)
+				sentiment.append(sentiment_merged)
+				if len(rev_merged) > max_review_sents:
+					max_review_sents = len(rev_merged)
+			else:
+				sys.exit("Provide a valid mode from [RECOMMENDATION, DECISION]")
+				
 
 		if mode == 'RECOMMENDATION':		
 			return cls((papers, reviews, sentiment, rec_scores), transform=transform, max_paper_sentences=max_paper_sents, max_review_sentences=max_review_sents, mode=mode)
 		if mode == 'DECISION':
-			return None
+			return cls((papers, reviews_all, sentiment, decision), transform=transform, max_paper_sentences=max_paper_sents, max_review_sentences=max_review_sents, mode=mode)
 		
 	def __getitem__(self, index):
 		if self.mode == 'RECOMMENDATION':
@@ -101,14 +114,15 @@ class Data(Dataset):
 					self.transform(np.asarray(self.data[2][index]), self.max_review_sentences),\
 					self.data[3][index]
 			else:
-				None
+				sys.exit("Use the transform!")
 		elif self.mode == 'DECISION':
 			if self.transform:
-				pass
+				return self.transform(np.asarray(self.data[0][index]), self.max_paper_sentences), \
+					self.transform(np.asarray(self.data[1][index]), self.max_review_sentences), \
+					self.transform(np.asarray(self.data[2][index]), self.max_review_sentences),\
+					self.data[3][index]
 			else:
 				pass
-		else:
-			pass
 
 	def __len__(self):
 		return len(self.data)
@@ -121,7 +135,6 @@ def getLoaders(data_path = './2018/', mode='RECOMMENDATION', batch_size=8, slice
 	print('Reading the validation Dataset...')
 	valid_dataset = Data.readData(valid_path, mode=mode, slice_=slice[1], transform=Transform())
 	
-	
 	trainloader = DataLoader(train_dataset, batch_size = batch_size, shuffle = True, num_workers=4)
 	validloader = DataLoader(valid_dataset, batch_size = batch_size, shuffle=True, num_workers=4)
 	
@@ -132,7 +145,7 @@ def getLoaders(data_path = './2018/', mode='RECOMMENDATION', batch_size=8, slice
 
 
 if __name__ == "__main__":
-	trainloader, validloader, _, _ = getLoaders(batch_size=2, slice=[5,5,5])
+	trainloader, validloader, _, _ = getLoaders(batch_size=2, mode='DECISION', slice=[5,5,5])
 	print(len(trainloader), len(validloader))
 	for i, d in enumerate(zip(*(trainloader, validloader)), 0):
 		train, valid = d

@@ -4,19 +4,19 @@ import torch.nn.functional as F
 
 
 
-class CNN2(nn.Module):
-	def __init__(self, rh1, ch1, max_sentences):
-		super(CNN2, self).__init__()
+class predict(nn.Module):
+	def __init__(self, in_channels, rh1, ch1, max_sentences):
+		super(predict, self).__init__()
 		
 		self.num_filters = 3
 		self.kernel_shape = [3,4,5]
 		self.kernels = 512
 		self.p3 = nn.Sequential(
-							nn.Conv1d(in_channels = 768, out_channels = 256, kernel_size = 5),
+							nn.Conv1d(in_channels = in_channels, out_channels = 256, kernel_size = 5),
 							nn.ReLU()
 							)
 		self.r3 = nn.Sequential(
-							nn.Conv1d(in_channels = 768, out_channels = 256, kernel_size = 5),
+							nn.Conv1d(in_channels = in_channels, out_channels = 256, kernel_size = 5),
 							nn.ReLU()
 							)
 	

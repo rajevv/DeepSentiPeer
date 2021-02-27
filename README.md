@@ -15,7 +15,7 @@ The organization of is as follows:
 To get started, follow:
 ```
 $python prepare_data.py ./2018
-$python run_model.py
+$python run_model.py --mode RECOMMENDATION
 ```
 
 Note: `prepare_data.py` may run for many hours depending on the size of the data.

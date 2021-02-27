@@ -10,7 +10,7 @@ import glob
 #from sklearn.feature_extraction.text import TfidfVectorizer
 #from .Review import Review
 #from .Paper import Paper
-from ScienceParse import ScienceParse
+from utils.ScienceParse import ScienceParse
 
 class ScienceParseReader:
   """

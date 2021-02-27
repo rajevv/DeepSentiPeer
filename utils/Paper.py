@@ -2,7 +2,7 @@ import re
 import io
 import json
 import sys
-from Review import Review
+from utils.Review import Review
 
 class Paper:
 	"""A paper class, which contains relevant fields and a list of reviews"""

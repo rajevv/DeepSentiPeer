@@ -41,11 +41,12 @@ def Embeddings(paper_sent, reviews_sents, test = False, write=False):
 	return embeddings[-1,:,:], embeddings[:-1,:,:], sentiment[:-1,:,:]
 
 
-def getEmbeddings(d,paper=None,path=None,filename=None):
+def getEmbeddings(d,paper=None,path=None,filename=None, decision=None):
 	paper_emb, reviews_emb, review_sentiment = Embeddings(sent_tokenize(d['paper_content']), [sent_tokenize(r) for r in d['reviews_content']])
 	json_obj = {}
 	json_obj['reviews'] = []
 	json_obj['paper'] = paper_emb
+	json_obj['DECISION'] = decision
 	for i,review in enumerate(paper.REVIEWS):
 		rev_ = {}
 		rev_['review_text'] = reviews_emb[i,:,:]
@@ -122,9 +123,11 @@ def prepare_data(**kwargs):
 				d['reviews_content'] = review_contents
 				d['reviews'] = reviews
 				data[dataset].append(d)
-				#print(paper.__dict__['REVIEWS'][0].__dict__.keys())
-				#print('Emb_dir: {}'.format(emb_dir))
-				getEmbeddings(d, paper=paper, path=emb_dir, filename=paper_json_filename.split('/')[-1])
+				try:
+					decision= int(paper.ACCEPTED) 
+				except:
+					decision=0
+				getEmbeddings(d, paper=paper, path=emb_dir, filename=paper_json_filename.split('/')[-1], decision=decision)
 				with open(os.path.join(emb_dir, paper_json_filename.split('/')[-1]), 'r') as f:
 					fl = json.load(f)
 					papers.append(fl)
