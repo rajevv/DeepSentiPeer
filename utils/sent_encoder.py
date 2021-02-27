@@ -21,6 +21,7 @@ class SentenceEncoder():
 
 
 		if self.model == 'scibert_scivocab_uncased':
+			#provide the path to the downloaded scibert model
 			word_embedding_model = models.BERT('./../rev_sig/codes/models/scibert_scivocab_uncased/')
 			pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension(),
 										   pooling_mode_mean_tokens=True,
