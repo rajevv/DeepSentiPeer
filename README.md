@@ -18,7 +18,7 @@ $python prepare_data.py ./2018
 $python run_model.py --mode RECOMMENDATION
 ```
 
-Note: `prepare_data.py` may run for many hours depending on the size of the data. Also set the trainig data and validation path properly.
+Note: `prepare_data.py` may run for many hours depending on the size of the data. Also set the trainig data and validation data path properly.
 
 The `run_model.py` has the following settings:
 
